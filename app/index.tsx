@@ -1,24 +1,13 @@
-import GoogleSigninSignup from "@/components/GoogleSignin-Signup";
-import { StyleSheet, View } from "react-native";
+import GoogleSigninSignup from '@/components/GoogleSignin-Signup'; // Tu componente de UI
+import { AuthProvider } from '@/context/AuthContext';
+import React from 'react';
 
 const App = () => {
- 
-
   return (
-    <View style={styles.container}>
+    <AuthProvider>
       <GoogleSigninSignup />
-    </View>
+    </AuthProvider>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F2F2F7',
-    paddingHorizontal: 16,
-  },
-});
 
 export default App;
