@@ -1,0 +1,65 @@
+// app.config.js - Expo configuration with environment variables
+import 'dotenv/config';
+
+export default {
+  expo: {
+    name: 'triky-multi',
+    slug: 'triky-multi',
+    version: '1.0.0',
+    orientation: 'portrait',
+    icon: './assets/images/icon.png',
+    scheme: 'triky-multi',
+    userInterfaceStyle: 'automatic',
+    newArchEnabled: true,
+    ios: {
+      supportsTablet: true,
+      bundleIdentifier: 'com.sebasescobar.trikymulti'
+    },
+    android: {
+      adaptiveIcon: {
+        foregroundImage: './assets/images/adaptive-icon.png',
+        backgroundColor: '#ffffff'
+      },
+      edgeToEdgeEnabled: true,
+      package: 'com.sebasescobar.trikymulti'
+    },
+    web: {
+      bundler: 'metro',
+      output: 'static',
+      favicon: './assets/images/favicon.png'
+    },
+    plugins: [
+      'expo-router',
+      [
+        'expo-splash-screen',
+        {
+          'image': './assets/images/splash-icon.png',
+          'imageWidth': 200,
+          'resizeMode': 'contain',
+          'backgroundColor': '#ffffff'
+        }
+      ],
+      'expo-web-browser',
+      [
+        '@react-native-google-signin/google-signin',
+        {
+          'iosUrlScheme': 'com.googleusercontent.apps.464846397786-b39ci0it8jlo6i88kkfbbojan04f9m5i'
+        }
+      ]
+    ],
+    experiments: {
+      typedRoutes: true
+    },
+    extra: {
+      router: {},
+      eas: {
+        projectId: '3fd440e8-eb53-4a06-8971-1268f34a2f63'
+      },
+      // Expose environment variables to the app
+      googleWebClientId: process.env.EXPO_CLIENT_ID,
+      googleAndroidClientId: process.env.ANDROID_CLIENT_ID,
+      googleIosClientId: process.env.IOS_CLIENT_ID,
+    },
+    owner: 'sebasescobar'
+  }
+};
