@@ -1,4 +1,4 @@
-import useGoogleAuth from '@/hooks/useGoogleAuth';
+import { useAuth } from '@/context/AuthContext';
 import { FontAwesome5 } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { useEffect } from 'react';
@@ -6,7 +6,7 @@ import { ActivityIndicator, Image, Platform, StyleSheet, Text, TouchableOpacity,
 
 const GoogleSigninSignup = () => {
  
-  const { user, loading, error, signIn, signOut, getCurrentUser } = useGoogleAuth();
+  const { user, loading, error, signIn, signOut, getCurrentUser } = useAuth();
 
   useEffect(() => {
     getCurrentUser();
