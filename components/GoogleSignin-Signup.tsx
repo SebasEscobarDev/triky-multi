@@ -29,6 +29,8 @@ const GoogleSigninSignup = () => {
               </View>
               
               <View style={styles.infoContainer}>
+                {/* <Text>106118156905475330433</Text>
+                <Text >{user.user.id}</Text> */}
                 <Text style={styles.nameText}>{user.user.name}</Text>
                 <View style={styles.emailContainer}>
                   <Text style={styles.typeLabel}>Correo:</Text>
