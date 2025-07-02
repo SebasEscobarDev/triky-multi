@@ -1,24 +1,25 @@
 import { useAuth } from '@/context/AuthContext';
-import { FontAwesome5 } from '@expo/vector-icons';
 import { BlurView } from 'expo-blur';
 import { useEffect } from 'react';
 import { ActivityIndicator, Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useTheme } from 'react-native-paper';
+import BtnApp from './ui/BtnApp';
 
 const GoogleSigninSignup = () => {
- 
+  const theme = useTheme();
   const { user, loading, error, signIn, signOut, getCurrentUser } = useAuth();
 
   useEffect(() => {
     getCurrentUser();
-  }, [loading]);
+  }, [getCurrentUser]);
 
   return (
     <View style={styles.container}>
       {loading ? (
-        <ActivityIndicator size="large" />
+        <ActivityIndicator size="large" color={theme.colors.primary} />
       ) : user ? (
         <View style={styles.cardContainer}>
-          <BlurView intensity={50} style={styles.cardBlur} tint="light">
+          <BlurView intensity={50} style={[styles.cardBlur, { backgroundColor: theme.colors.surface }]} tint="dark">
             <View style={styles.cardContent}>
               <View style={styles.photoContainer}>
                 <Image 
@@ -38,17 +39,23 @@ const GoogleSigninSignup = () => {
                 </View>
               </View>
               
-              <TouchableOpacity style={styles.signOutButton} onPress={signOut}>
+              <TouchableOpacity 
+                style={[styles.signOutButton, { backgroundColor: theme.colors.primary }]} 
+                onPress={signOut}
+              >
                 <Text style={styles.signOutText}>Cerrar Sesión</Text>
               </TouchableOpacity>
             </View>
           </BlurView>
         </View>
       ) : (
-        <TouchableOpacity style={styles.googleButton} onPress={signIn}>
-          <FontAwesome5 name="google" size={20} color="white" style={styles.googleIcon} />
-          <Text style={styles.googleButtonText}>Inicia Sesión con Google</Text>
-        </TouchableOpacity>
+        <BtnApp
+          onPress={signIn}
+          title="Continua con Google"
+          iconName="google"
+          iconColor="white"
+          iconSize={20}
+        />
       )}
       {error && <Text style={styles.error}>{error}</Text>}
     </View>
@@ -57,47 +64,19 @@ const GoogleSigninSignup = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    display: 'flex',
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F2F2F7',
-    paddingHorizontal: 16,
+    paddingHorizontal: 0,
   },
   error: {
     color: 'red',
     marginTop: 10,
     fontWeight: '500',
   },
-  googleButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#4285F4',
-    paddingVertical: 12,
-    paddingHorizontal: 30,
-    borderRadius: 25,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
-  },
-  googleIcon: {
-    marginRight: 12,
-  },
-  googleButtonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: '600',
-  },
   cardContainer: {
     width: '100%',
-    maxWidth: 400,
     borderRadius: 20,
     overflow: 'hidden',
     ...Platform.select({
@@ -114,8 +93,9 @@ const styles = StyleSheet.create({
   },
   cardBlur: {
     overflow: 'hidden',
-    borderRadius: 20,
-    backgroundColor: 'rgba(255, 255, 255, 0.85)',
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: '#334155',
   },
   cardContent: {
     padding: 20,
@@ -151,7 +131,7 @@ const styles = StyleSheet.create({
   nameText: {
     fontSize: 24,
     fontWeight: '600',
-    color: '#000',
+    color: '#fff',
     marginBottom: 8,
     textAlign: 'center',
   },
@@ -163,26 +143,25 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
   },
   typeLabel: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '500',
-    color: '#636366',
+    color: '#94a3b8',
     marginRight: 6,
   },
   emailText: {
-    fontSize: 16,
-    color: '#007AFF',
+    fontSize: 18,
+    color: '#4caf50',
     fontWeight: '400',
   },
   signOutButton: {
-    backgroundColor: '#007AFF',
     paddingHorizontal: 24,
     paddingVertical: 12,
-    borderRadius: 24,
+    borderRadius: 12,
     marginTop: 8,
   },
   signOutText: {
     color: 'white',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: '600',
   },
 });

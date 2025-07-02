@@ -1,29 +1,40 @@
 import { AuthProvider } from '@/context/AuthContext';
-import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import RootNavigator from '@/navigation/RootNavigator';
 import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
+import { MD3DarkTheme, PaperProvider } from 'react-native-paper';
 
-export default function RootLayout() {
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+// Crear un tema oscuro personalizado con acentos verdes
+const theme = {
+  ...MD3DarkTheme,
+  colors: {
+    ...MD3DarkTheme.colors,
+    primary: '#3f9142',         // Verde principal para botones y elementos principales
+    accent: '#4ade80',          // Verde para acentos
+    onPrimary: '#ffffff',       // Texto sobre botones primarios
+    background: '#0f172a',      // Fondo oscuro azulado
+    surface: '#1e293b',         // Superficies (tarjetas, inputs)
+    surfaceVariant: '#334155',  // Variante de superficie para contenedores
+    onSurface: '#ffffff',       // Texto sobre superficies
+    onSurfaceVariant: '#94a3b8',// Texto secundario
+    outline: '#3f9142',         // Contornos de componentes
+    elevation: {
+      level0: 'transparent',
+      level1: '#1e293b',        // Fondo elevado nivel 1
+      level2: '#273549',        // Fondo elevado nivel 2
+      level3: '#334155',        // Fondo elevado nivel 3
+      level4: '#3e4a61',        // Fondo elevado nivel 4
+      level5: '#475569',        // Fondo elevado nivel 5
+    }
+  },
+};
 
-  if (!loaded) {
-    // Async font loading only occurs in development.
-    return null;
-  }
-
+export default function App() {
   return (
-    <ThemeProvider value={DefaultTheme}>
+    <PaperProvider theme={theme}>
+      <StatusBar style="light" />
       <AuthProvider>
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" />
+        <RootNavigator />
       </AuthProvider>
-    </ThemeProvider>
+    </PaperProvider>
   );
 }
