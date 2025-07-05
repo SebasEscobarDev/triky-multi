@@ -1,11 +1,14 @@
 import GoogleSigninSignup from '@/components/GoogleSignin-Signup';
 import BtnApp from '@/components/ui/BtnApp';
+import InputWithIcon from '@/components/ui/InputWithIcon';
+import LinkButton from '@/components/ui/LinkButton';
+import Separator from '@/components/ui/Separator';
 import { useAuth } from '@/context/AuthContext';
-import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Text, TextInput } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 
 export default function SignInScreen({ navigation }: any) {
   const { signIn } = useAuth();
@@ -45,57 +48,34 @@ export default function SignInScreen({ navigation }: any) {
         </View>
         
         <View style={styles.formContainer}>
-        <View style={styles.inputContainer}>
-          <MaterialCommunityIcons name="email-outline" size={24} color="#4ade80" style={styles.inputIcon} />
-          <TextInput
-            label="Correo (cualquier correo funciona)"
-            value={email}
-            onChangeText={setEmail}
-            style={styles.input}
-            mode="flat"
-            autoCapitalize="none"
-            keyboardType="email-address"
-            theme={{ colors: { primary: '#4ade80', onSurfaceVariant: '#94a3b8' } }}
-            textColor="#fff"
-            underlineStyle={{ display: 'none' }}
-            contentStyle={{ backgroundColor: '#1e293b', borderRadius: 15 }}
-          />
-        </View>
-        <View style={styles.inputContainer}>
-          <MaterialCommunityIcons name="lock-outline" size={24} color="#4ade80" style={styles.inputIcon} />
-          <TextInput
-            label="Contraseña (cualquier contraseña funciona)"
-            secureTextEntry
-            value={password}
-            onChangeText={setPassword}
-            style={styles.input}
-            mode="flat"
-            theme={{ colors: { primary: '#4ade80', onSurfaceVariant: '#94a3b8' } }}
-            textColor="#fff"
-            underlineStyle={{ display: 'none' }}
-            contentStyle={{ backgroundColor: '#1e293b', borderRadius: 15}}
-          />
-        </View>
+        <InputWithIcon 
+          icon="email-outline"
+          label="Correo (cualquier correo funciona)"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+        />
+        
+        <InputWithIcon 
+          icon="lock-outline"
+          label="Contraseña (cualquier contraseña funciona)"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
         
         <BtnApp
           onPress={handleLogin}
           title="Iniciar Sesión"
         />
         
-        <TouchableOpacity 
-          style={styles.signUpButtonContainer}
+        <LinkButton 
+          text="¿No tienes una cuenta? Regístrate"
+          highlightText="Regístrate"
           onPress={() => navigation.navigate('SignUp')}
-        >
-          <View style={styles.neonSignUpBorder}>
-            <Text style={styles.signUpText}>¿No tienes una cuenta? <Text style={styles.signUpHighlight}>Regístrate</Text></Text>
-          </View>
-        </TouchableOpacity>
+        />
         
-        <View style={styles.separatorContainer}>
-          <View style={styles.separatorLine} />
-          <Text style={styles.separatorText}>ó</Text>
-          <View style={styles.separatorLine} />
-        </View>
+        <Separator />
         
         <View style={styles.googleSigninContainer}>
           <GoogleSigninSignup />
@@ -193,80 +173,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 30,
     paddingVertical: 20,
   },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderRadius: 15,
-    overflow: 'hidden',
-    marginBottom: 16,
-    height: 60,
-  },
-  inputIcon: {
-    marginLeft: 8,
-    zIndex: 1,
-    overflow: 'hidden',
-    display: 'flex',
-    borderTopLeftRadius: 15,
-    borderBottomLeftRadius: 15,
-  },
-  input: {
-    flex: 1,
-    marginBottom: 0,
-    backgroundColor: '#1e293b',
-    fontSize: 16,
-    borderRadius: 15,
-    paddingLeft: 36,
-    marginLeft: -36,
-  },
-  signUpButtonContainer: {
-    paddingVertical: 15,
-    alignItems: 'center',
-    marginVertical: 5,
-    shadowColor: '#3f9142',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-    elevation: 3,
-  },
-  neonSignUpBorder: {
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    borderRadius: 15,
-    borderWidth: 1,
-    borderColor: 'rgba(63, 145, 66, 0.5)',
-  },
-  signUpText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  signUpHighlight: {
-    color: '#3f9142',
-    fontWeight: '700',
-    textShadowColor: 'rgba(63, 145, 66, 0.8)',
-    textShadowOffset: {width: 0, height: 0},
-    textShadowRadius: 5,
-  },
   googleSigninContainer: {
     width: '100%',
     marginTop: 15,
     alignItems: 'center',
-  },
-  separatorContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
-    marginVertical: 15,
-  },
-  separatorLine: {
-    flex: 1,
-    height: 1,
-    backgroundColor: '#334155',
-  },
-  separatorText: {
-    color: '#94a3b8',
-    paddingHorizontal: 15,
-    fontSize: 16,
   },
 });

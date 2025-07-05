@@ -1,12 +1,12 @@
-import HomeScreen from '@/screens/tabs/HomeScreen';
-import LogoutScreen from '@/screens/tabs/LogoutScreen';
-import ProfileScreen from '@/screens/tabs/ProfileScreen';
+import { useAuth } from '@/context/AuthContext';
+import HomeStack from '@/navigation/HomeStack';
+import SettingsStack from '@/navigation/SettingsStack';
+import ProfileStack from '@/navigation/ProfileStack';
 import RankingScreen from '@/screens/tabs/RankingScreen';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Image, View, StyleSheet } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { useAuth } from '@/context/AuthContext';
 
 const Tab = createBottomTabNavigator();
 
@@ -52,8 +52,8 @@ export default function AppTabs() {
             }
             // Si no hay foto, usar el icono predeterminado
             iconName = focused ? 'account' : 'account-outline';
-          } else if (route.name === 'Salir') {
-            iconName = 'logout';
+          } else if (route.name === 'Ajustes') {
+            iconName = focused ? 'cog' : 'cog-outline';
           }
 
           // Aplicar efecto neón a los iconos activos
@@ -90,10 +90,10 @@ export default function AppTabs() {
         },
       })}
     >
-      <Tab.Screen name="Inicio" component={HomeScreen} />
+      <Tab.Screen name="Inicio" component={HomeStack} />
       <Tab.Screen name="Ranking" component={RankingScreen} />
-      <Tab.Screen name="Perfil" component={ProfileScreen} />
-      <Tab.Screen name="Salir" component={LogoutScreen} />
+      <Tab.Screen name="Perfil" component={ProfileStack} />
+      <Tab.Screen name="Ajustes" component={SettingsStack} />
     </Tab.Navigator>
   );
 }

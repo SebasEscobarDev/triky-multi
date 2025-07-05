@@ -1,6 +1,8 @@
 import { useAuth } from '@/context/AuthContext';
+import { GameMatchProvider } from '@/context/GameMatchContext';
 import AppTabs from '@/navigation/AppTabs';
 import AuthStack from '@/navigation/AuthStack';
+import MatchSearchAlert from '@/components/ui/MatchSearchAlert';
 
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
@@ -18,7 +20,20 @@ export default function RootNavigator() {
     );
   }
 
-  return <>{user ? <AppTabs /> : <AuthStack />}</>;
+  return (
+    <GameMatchProvider>
+      <>
+        {user ? (
+          <>
+            <AppTabs />
+            <MatchSearchAlert />
+          </>
+        ) : (
+          <AuthStack />
+        )}
+      </>
+    </GameMatchProvider>
+  );
 }
 
 const styles = StyleSheet.create({

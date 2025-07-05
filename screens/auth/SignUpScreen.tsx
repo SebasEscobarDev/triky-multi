@@ -1,10 +1,12 @@
 import BtnApp from '@/components/ui/BtnApp';
+import InputWithIcon from '@/components/ui/InputWithIcon';
+import LinkButton from '@/components/ui/LinkButton';
 import { useAuth } from '@/context/AuthContext';
-import { FontAwesome5, MaterialCommunityIcons } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
 import { Image, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { Text, TextInput } from 'react-native-paper';
+import { Text } from 'react-native-paper';
 
 export default function SignUpScreen({ navigation }: any) {
   const { signIn } = useAuth(); // Simulamos login después de registro
@@ -43,53 +45,34 @@ export default function SignUpScreen({ navigation }: any) {
         </View>
         
         <View style={styles.formContainer}>
-        <Text style={styles.formTitle}>Registrarse</Text>
-        
-        <View style={styles.inputContainer}>
-          <MaterialCommunityIcons name="email-outline" size={24} color="#4ade80" style={styles.inputIcon} />
-          <TextInput
+          <Text style={styles.formTitle}>Registrarse</Text>
+          
+          <InputWithIcon 
+            icon="email-outline"
             label="Correo (cualquier correo funciona)"
             value={email}
             onChangeText={setEmail}
-            style={styles.input}
-            mode="flat"
-            autoCapitalize="none"
             keyboardType="email-address"
-            theme={{ colors: { primary: '#4ade80', onSurfaceVariant: '#94a3b8' } }}
-            textColor="#fff"
-            underlineStyle={{ display: 'none' }}
-            contentStyle={{ backgroundColor: '#1e293b', borderRadius: 15 }}
           />
-        </View>
-        <View style={styles.inputContainer}>
-          <MaterialCommunityIcons name="lock-outline" size={24} color="#4ade80" style={styles.inputIcon} />
-          <TextInput
+          
+          <InputWithIcon 
+            icon="lock-outline"
             label="Contraseña (cualquier contraseña funciona)"
-            secureTextEntry
             value={password}
             onChangeText={setPassword}
-            style={styles.input}
-            mode="flat"
-            theme={{ colors: { primary: '#4ade80', onSurfaceVariant: '#94a3b8' } }}
-            textColor="#fff"
-            underlineStyle={{ display: 'none' }}
-            contentStyle={{ backgroundColor: '#1e293b', borderRadius: 15 }}
+            secureTextEntry
           />
-        </View>
-        
-        <BtnApp
-          onPress={handleRegister}
-          title="Crear Cuenta"
-        />
-        
-        <TouchableOpacity 
-          style={styles.signInButtonContainer}
-          onPress={() => navigation.navigate('SignIn')}
-        >
-          <View style={styles.neonSignInBorder}>
-            <Text style={styles.signInText}>¿Ya tienes una cuenta? <Text style={styles.signInHighlight}>Inicia Sesión</Text></Text>
-          </View>
-        </TouchableOpacity>
+          
+          <BtnApp
+            onPress={handleRegister}
+            title="Crear Cuenta"
+          />
+          
+          <LinkButton 
+            text="¿Ya tienes una cuenta? Inicia Sesión"
+            highlightText="Inicia Sesión"
+            onPress={() => navigation.navigate('SignIn')}
+          />
         </View>
       </View>
     </View>
@@ -190,56 +173,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
   },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 16,
-    borderRadius: 15,
-    overflow: 'hidden',
-  },
-  inputIcon: {
-    marginLeft: 8,
-    zIndex: 1,
-    borderTopLeftRadius: 15,
-    borderBottomLeftRadius: 15,
-  },
-  input: {
-    flex: 1,
-    marginBottom: 0,
-    backgroundColor: '#1e293b',
-    fontSize: 16,
-    borderRadius: 15,
-    paddingLeft: 36,
-    marginLeft: -36,
-  },
-  signInButtonContainer: {
-    paddingVertical: 15,
-    alignItems: 'center',
-    marginVertical: 5,
-    shadowColor: '#3f9142',
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.5,
-    shadowRadius: 5,
-    elevation: 3,
-  },
-  neonSignInBorder: {
-    paddingVertical: 8,
-    paddingHorizontal: 15,
-    borderRadius: 15,
-    borderWidth: 1,
-    borderColor: 'rgba(63, 145, 66, 0.5)',
-  },
-  signInText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  signInHighlight: {
-    color: '#3f9142',
-    fontWeight: '700',
-    textShadowColor: 'rgba(63, 145, 66, 0.8)',
-    textShadowOffset: {width: 0, height: 0},
-    textShadowRadius: 5,
-  },
+  // Los estilos de input se han movido a InputWithIcon.tsx
+  // Los estilos del botón de inicio de sesión se han movido a LinkButton.tsx
 });
